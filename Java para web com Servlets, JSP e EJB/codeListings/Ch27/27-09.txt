@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>Write to an applet's property</TITLE>
+<SCRIPT>
+
+function setSecretValue(str) {
+  document.applets[0].setSecretValue(str);
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM>
+Type your message in the following box as the applet's property value.
+&nbsp;<INPUT TYPE=TEXT NAME=Secret>
+&nbsp;<INPUT TYPE=BUTTON onClick='setSecretValue(this.form.Secret.value);'
+  VALUE="Set Property">
+</FORM>
+<BR>
+<APPLET
+  CODEBASE = "."
+  CODE     = "MyApplet.class"
+  NAME     = "TestApplet"
+  WIDTH    = 200
+  HEIGHT   = 50
+  HSPACE   = 0
+  VSPACE   = 0
+  ALIGN    = middle
+  MAYSCRIPT
+>
+</APPLET>
+</BODY>
+</HTML>

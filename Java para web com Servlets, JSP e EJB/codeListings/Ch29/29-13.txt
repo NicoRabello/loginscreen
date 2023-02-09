@@ -1,0 +1,88 @@
+package com.brainysoftware.tassie.servlet;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import javax.naming.*;
+import javax.rmi.PortableRemoteObject;
+import com.brainysoftware.tassie.ejb.BookDetails;
+import com.brainysoftware.tassie.ejb.BookDetailsHome;
+
+public class BookDetailsServlet extends HttpServlet {
+
+  /**Process the HTTP Get request*/
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String bookId = request.getParameter("bookId");
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Book Details</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+
+    Properties properties = new Properties();
+    properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+    properties.put(Context.PROVIDER_URL, "localhost:1099");
+    try {
+      // Get a naming context
+      InitialContext jndiContext = new InitialContext(properties);
+
+      // Get a reference to the Bean
+      Object ref  = jndiContext.lookup("BookDetails");
+
+      // Get a reference from this to the Bean's Home interface
+      BookDetailsHome home = (BookDetailsHome)
+        PortableRemoteObject.narrow (ref, BookDetailsHome.class);
+
+      // Create an Adder object from the Home interface
+      BookDetails bookDetailsBean = home.create();
+      String[] row = bookDetailsBean.getBookDetails(bookId);
+      out.println("<H3>Book Details</H3>");
+      out.println("<BR>");
+      out.println("<TABLE BORDER=0>");
+      out.println("<TR>");
+      out.println("<TD><B>Title:</B></TD>");
+      out.println("<TD>" + row[1] + "</TD>");
+      out.println("</TR>");
+      out.println("<TR>");
+      out.println("<TD><B>Author:</B></TD>");
+      out.println("<TD>" + row[2] + "</TD>");
+      out.println("</TR>");
+      out.println("<TR>");
+      out.println("<TD><B>Publisher:</B></TD>");
+      out.println("<TD>" + row[3] + "</TD>");
+      out.println("</TR>");
+      out.println("<TR>");
+      out.println("<TD><B>Price:</B></TD>");
+      out.println("<TD>$" + row[4] + "</TD>");
+      out.println("</TR>");
+      out.println("</TABLE>");
+      out.println("<BR>");
+      out.println("<BR>");
+      out.println("<HR>");
+      out.println("<BR>");
+      out.println("<BR>");
+      out.println("<B>Put this book in the shopping cart</B>");
+      out.println("<BR>");
+      out.println("<FORM METHOD=POST ACTION=com.brainysoftware.tassie.servlet.AddToCartServlet>");
+      out.println("<INPUT TYPE=HIDDEN Name=bookId VALUE=" + row[0] + ">");
+      out.println("I want to purchase ");
+      out.println("<INPUT TYPE=TEXT SIZE=1 Name=quantity VALUE=1> copies of this book");
+      out.println("&nbsp;&nbsp;");
+      out.println("<INPUT TYPE=SUBMIT VALUE=Buy>");
+      out.println("</FORM>");
+      out.println("<BR>");
+      out.println("<HR>");
+
+    }
+    catch(Exception e) {
+      System.out.println(e.toString());
+    }
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }
+}

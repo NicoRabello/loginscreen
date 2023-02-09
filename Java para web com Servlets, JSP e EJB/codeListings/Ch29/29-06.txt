@@ -1,0 +1,9 @@
+package com.brainysoftware.tassie.ejb;
+
+import javax.ejb.EJBObject;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+public interface BookDetails extends EJBObject {
+  public String[] getBookDetails(String bookId) throws RemoteException;
+}

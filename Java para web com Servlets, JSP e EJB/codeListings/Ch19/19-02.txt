@@ -1,0 +1,8 @@
+function createObject(id, title, url) {
+  var element = new Array();
+  element[0] = id;
+  element[1] = title;
+  element[2] = url;
+  element[3] = 0;
+  return element;
+}

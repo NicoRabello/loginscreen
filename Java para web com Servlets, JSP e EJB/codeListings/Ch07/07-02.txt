@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  <!-- Define servlet-mapped and path-mapped filters -->
+  <filter>
+    <filter-name>
+      Basic Filter
+    </filter-name>
+    <filter-class>
+      BasicFilter
+    </filter-class>
+  </filter>
+
+
+  <!-- Define filter mappings for the defined filters -->
+  <filter-mapping>
+    <filter-name>
+      Basic Filter
+    </filter-name>
+    <servlet-name>
+      FilteredServlet
+    </servlet-name>
+  </filter-mapping>
+  <listener>
+    <listener-class>
+      SessionLifeCycleEventDemo
+    </listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>
+      FilteredServlet
+    </servlet-name>
+    <servlet-class>
+      FilteredServlet
+    </servlet-class>
+  </servlet>
+</web-app>

@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<TITLE>A logic error</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+function getTotalCost() {
+
+  var freight = 2;
+  var totalCost =  freight + document.forms[0].price.value;
+  alert(totalCost); //result: 2300
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM>
+<INPUT TYPE=HIDDEN NAME=price VALUE="300">
+<INPUT TYPE=BUTTON VALUE="Get Total Cost" onClick="javascript:getTotalCost()">
+</FORM>
+</BODY>
+</HTML>

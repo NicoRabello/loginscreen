@@ -1,0 +1,16 @@
+import java.applet.*;
+import netscape.javascript.*;
+
+public class MyApplet extends Applet {
+
+  public void init() {
+    JSObject window = JSObject.getWindow(this);
+    String loginName = "boni";
+    String password = "secret";
+    window.eval("document.forms[0].loginName.value='" + loginName + "'");
+    window.eval("document.forms[0].password.value='" + password + "'");
+    window.eval("alert('Secret login name and password copied.')");
+
+  }
+
+}

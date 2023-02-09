@@ -1,0 +1,16 @@
+<SCRIPT LANGUAGE="JavaScript">
+function getCookie(name) {
+  var cName = name + "=";
+  var dc = document.cookie;
+  if (dc.length>0) {
+    begin = dc.indexOf(cName);
+    if (begin != -1) {
+      begin += cName.length;
+      end = dc.indexOf(";", begin);
+      if (end == -1) end = dc.length;
+        return unescape(dc.substring(begin,end));
+    }
+  }
+  return null;
+}
+</SCRIPT>

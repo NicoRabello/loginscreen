@@ -1,0 +1,1 @@
+Current Time: <%= java.util.Calendar.getInstance().getTime() %>

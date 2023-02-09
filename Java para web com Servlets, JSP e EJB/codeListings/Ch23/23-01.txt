@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<TITLE>Anticipating failed redirection</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+  // code for redirection here
+</SCRIPT>
+</HEAD>
+<BODY>
+Click <A HREF="RedirectionURL">here</A>
+if you do not get redirected automatically.
+</BODY>
+</HTML>

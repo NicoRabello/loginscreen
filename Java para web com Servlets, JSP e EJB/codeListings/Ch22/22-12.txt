@@ -1,0 +1,9 @@
+<SCRIPT LANGUAGE="JavaScript">
+var n0 = "train";
+var n1 = "abc4";
+var n2 = 2;
+
+alert(n0);
+alert(n1);
+alert(n2);
+</SCRIPT>

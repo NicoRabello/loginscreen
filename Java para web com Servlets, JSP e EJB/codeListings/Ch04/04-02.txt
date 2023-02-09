@@ -1,0 +1,41 @@
+private void sendLoginForm(HttpServletResponse response, 
+    boolean withErrorMessage)
+    throws ServletException, IOException {
+    
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Login</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+
+    if (withErrorMessage)
+      out.println("Login failed. Please try again.<BR>");
+
+    out.println("<BR>");
+    out.println("<BR><H2>Login Page</H2>");
+    out.println("<BR>");
+    out.println("<BR>Please enter your user name and password.");
+    out.println("<BR>");
+    out.println("<BR><FORM METHOD=POST>");
+    out.println("<TABLE>");
+    out.println("<TR>");
+    out.println("<TD>User Name:</TD>");
+    out.println("<TD><INPUT TYPE=TEXT NAME=userName></TD>");
+    out.println("</TR>");
+    out.println("<TR>");
+    out.println("<TD>Password:</TD>");
+    out.println("<TD><INPUT TYPE=PASSWORD NAME=password></TD>");
+    out.println("</TR>");
+    out.println("<TR>");
+    out.println("<TD ALIGN=RIGHT COLSPAN=2>");
+    out.println("<INPUT TYPE=SUBMIT VALUE=Login></TD>");
+    out.println("</TR>");
+    out.println("</TABLE>");
+    out.println("</FORM>");
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }

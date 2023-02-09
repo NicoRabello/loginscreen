@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueleto de página de login</title>
+    <script src="https://kit.fontawesome.com/bc6f8ba23a.js" crossorigin="anonymous"></script><!--fontawesome-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><!--google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!--google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet"><!--google fonts-->
+    <script src="./js/index.js" type="text/javascript" defer></script><!--java-->
+    <link rel="stylesheet" href="./css/styles.css"><!--css-->
+    <link rel="stylesheet" href="./css/btnmenu.css">
+</head>
+<body>
+    <header>
+        <div class="dropdown">
+            <button class="mainmenubtn">Principal</button>
+            <div class="dropdown-child">
+                <a href="./index.html">Login</a><!--Link para a tela de login-->
+                <a href="./P1.html">Esqueleto Página 1</a><!--Adicionar link para direcionamento-->
+                <a href="./P2.html">Esqueleto Página 2</a><!--Adicionar link para direcionamento-->
+                <a href="./P3.html">Esqueleto Página 3</a><!--Adicionar link para direcionamento-->
+                <a href="">Sub Menu 4</a><!--Adicionar link para direcionamento-->
+                <a href="">Sub Menu 5</a><!--Adicionar link para direcionamento-->
+            </div>
+          </div>
+        <h1 ><strong>Esqueleto de página de login</strong></h1>
+        <!--<img src="./img/" width="100px">--><!--AQUI--> <!--Criar um arquivo .PNG compatível-->
+        <form action="#" method="POST">
+            <input type="text" name="search" id="search" placeholder="Buscar" required>
+            <button type="submit"> <i class="fas fa-search"></i></button><!--Mecanismo de busca interno-->
+    </header>
+    
+    <main>
+        <form>
+
+            <section class="inputs-container">
+                <input type="email" placeholder="exemplo@gmail.com">
+                
+                <div class="password-container">
+                    <input type="password" id="field-Password" class="fieldPassword" placeholder="**********">
+                    <i class="fas fa-eye" id="eye" onclick="showPassword()"></i></a>
+                    <i class="fas fa-eye-slash" id="eye-slash" onclick="showPassword()"></i>
+                </div>
+            </section>
+            <section class="password-infos">
+                <div>
+                    <input type="checkbox">
+                    <span>Lembrar Senha</span>
+                </div>
+                <a href="https://abre.ai/nico935">Desejo entrar como convidado</a href><!--Adicionar link para direcionamento-->
+            </section>
+            <div>
+            <button type="submit" id="btn-login">login</button>
+            </div>
+
+            </section>
+           <!--<footer>
+                <hr>
+                <span>footer (lembrete)</a></span>
+            </footer>--> 
+        </form>
+    </main>
+</body>
+</html>

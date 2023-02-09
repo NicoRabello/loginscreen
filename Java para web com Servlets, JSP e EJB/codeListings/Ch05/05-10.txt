@@ -1,0 +1,68 @@
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import com.brainysoftware.java.StringUtil;
+
+public class Page2Servlet extends HttpServlet {
+  String page1Url = "Page1Servlet";
+  String firstName;
+  String lastName;
+
+  /**Process the HTTP Get request*/
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    response.sendRedirect(page1Url);
+  }
+
+  /**Process the HTTP Post request*/
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    firstName = request.getParameter("firstName");
+    lastName = request.getParameter("lastName");
+    if (firstName==null || lastName==null)
+      response.sendRedirect(page1Url);
+
+    sendPage2(response);
+  }
+
+  void sendPage2(HttpServletResponse response)
+    throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Page 2</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+    out.println("<H2>Page 2</H2>");
+    out.println("<BR>");
+    out.println("<BR>");
+    out.println("Please enter your user name and password.");
+    out.println("<BR>");
+    out.println("<BR>");
+    out.println("<FORM METHOD=POST ACTION=Page3Servlet>");
+    out.println("<INPUT TYPE=HIDDEN NAME=firstName VALUE=\"" +
+      StringUtil.encodeHtmlTag(firstName) + "\">");
+    out.println("<INPUT TYPE=HIDDEN NAME=lastName VALUE=\"" +
+      StringUtil.encodeHtmlTag(lastName) + "\">");
+    out.println("<TABLE>");
+    out.println("<TR>");
+    out.println("<TD>User Name&nbsp;</TD>");
+    out.println("<TD><INPUT TYPE=TEXT NAME=userName></TD>");
+    out.println("</TR>");
+    out.println("<TR>");
+    out.println("<TD>Password&nbsp;</TD>");
+    out.println("<TD><INPUT TYPE=PASSWORD NAME=password></TD>");
+    out.println("</TR>");
+    out.println("<TR>");
+    out.println("<TD><INPUT TYPE=RESET></TD>");
+    out.println("<TD><INPUT TYPE=SUBMIT VALUE=Submit></TD>");
+    out.println("</TR>");
+    out.println("</TABLE>");
+    out.println("</FORM>");
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }
+}

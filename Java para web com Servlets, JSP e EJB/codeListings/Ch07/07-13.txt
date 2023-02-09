@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+  PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  <!-- Define servlet-mapped and path-mapped filters -->
+  <filter>
+    <filter-name>
+      Response Filter
+    </filter-name>
+    <filter-class>
+      ResponseFilter
+    </filter-class>
+  </filter>
+
+
+  <!-- Define filter mappings for the defined filters -->
+  <filter-mapping>
+    <filter-name>
+      Response Filter
+    </filter-name>
+    <servlet-name>
+      ResponseFilteredServlet
+    </servlet-name>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>
+      ResponseFilteredServlet
+    </servlet-name>
+    <servlet-class>
+      ResponseFilteredServlet
+    </servlet-class>
+  </servlet>
+</web-app>

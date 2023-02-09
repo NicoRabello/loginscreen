@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<TITLE>Checking whether JavaScript is on</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+location="ActualMainPage.html"
+</SCRIPT>
+</HEAD>
+<BODY>
+This Web site requires that you use a JavaScript enabled 
+browser. Unfortunately, your browsers are either too old 
+to understand JavaScript or the feature is turned off. 
+Please click <A HREF="Message.html">here</A> for more information.
+</BODY>
+</HTML>

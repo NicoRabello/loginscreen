@@ -1,0 +1,26 @@
+import java.applet.*;
+import netscape.javascript.*;
+
+public class MyApplet extends Applet {
+
+  public void init() {
+    JSObject window = JSObject.getWindow(this);
+    // invoking a custom function called noArg
+    // that accepts no argument.
+    window.call("noArg", null);
+
+    // invoking the alert method, passing one
+    // argument obj1;
+    Object[] obj1 = new Object[1];
+    obj1[0] = "Hello from MyApplet!!!";
+    window.call("alert", obj1);
+
+    // invoking the custom function twoArgs
+    // with two arguments.
+    Object[] obj2 = new Object[2];
+    obj2[0] = "one ";
+    obj2[1] = "2";
+    window.call("twoArgs", obj2);
+  }
+
+}

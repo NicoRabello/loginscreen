@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+<%
+  out.println(“JSP is easy”);
+%>
+</BODY>
+</HTML>

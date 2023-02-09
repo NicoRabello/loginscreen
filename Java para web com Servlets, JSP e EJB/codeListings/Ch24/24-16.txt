@@ -1,0 +1,9 @@
+<SCRIPT LANGUAGE="JavaScript">
+function toString(n) {
+  return "" + n;
+}
+/* note
+"" + 98;  //result = "98"
+("" + 98).length;  //result = 2
+*/
+</SCRIPT>

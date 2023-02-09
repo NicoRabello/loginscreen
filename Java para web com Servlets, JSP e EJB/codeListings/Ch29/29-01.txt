@@ -1,0 +1,23 @@
+import java.rmi.RemoteException;
+import javax.ejb.SessionBean;
+import javax.ejb.SessionContext;
+
+public class MySessionBean implements SessionBean {
+
+  public void ejbCreate() {
+  }
+
+  public void ejbRemove() {
+  }
+
+  public void ejbActivate() {
+  }
+
+  public void ejbPassivate() {
+  }
+
+  public void setSessionContext(SessionContext sc) {
+  }
+
+  // implementation methods here
+}

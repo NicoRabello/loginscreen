@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<TITLE>Going n pages back </TITLE>
+</HEAD.
+<BODY>
+Click <A HREF="javascript:history.go(-3)">here</A>
+to go back the the beginning of the entry form go back.
+</BODY>
+</HTML>

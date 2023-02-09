@@ -1,0 +1,8 @@
+<SCRIPT LANGUAGE="JavaScript">
+function createDog(name, color) {
+  var dog = new Array();
+  dog[0] = name;
+  dog[1] = color;
+  return dog;
+}
+</SCRIPT>

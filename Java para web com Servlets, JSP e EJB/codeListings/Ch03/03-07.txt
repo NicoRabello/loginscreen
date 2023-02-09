@@ -1,0 +1,21 @@
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+
+public class SpecialCharacterServlet extends HttpServlet {
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+  throws ServletException, IOException {
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>HTML Tutorial -- Changing Line</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("In HTML, you use <BR> to change line.");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }
+}

@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+function getOperatingSystem(){
+  var os;
+  var v = navigator.appVersion.toUpperCase();
+  if (1+v.indexOf('WIN95') || 1+v.indexOf('WINDOWS 95')
+    || 1+v.indexOf('WIN32'))
+    os = 'Win95';
+  else if (1+v.indexOf('WIN98') 
+    || 1+v.indexOf('WINDOWS 98'))
+    os = 'Win98';
+  else if (1+v.indexOf('WINNT')
+    ||  1+v.indexOf('WINDOWS NT'))
+    os = 'WinNT'; //WinNT or Win2K
+  else if (1+v.indexOf('WINDOWS 3.1'))
+    os = 'Win3.1';
+  else if (1+v.indexOf('WINDOWS 3'))
+    os = 'Win3';
+  else if (1+v.indexOf('WIN16'))
+    os = 'Win16';  // might be 3.x or NT.
+  else if((1+v.indexOf('MAC')) && 
+    (1+v.indexOf('PPC') || 1+v.indexOf('POWERPC')))
+    os = 'Macintosh ppc';
+  else if (1+v.indexOf('MAC'))
+    os = 'Mac68K';
+  else if (1+v.indexOf('SUNOS'))
+    os = 'Sun';
+  else if (1+v.indexOf('LINUX'))
+    os = 'Linux';
+  else if (1+v.indexOf('IRIX'))
+    os = 'Irix'
+  else if (1+v.indexOf('HP-UX'))
+    os = 'HP-UX';
+  else if (1+v.indexOf('OSF'))
+    os = 'OSF';
+  else if (1+v.indexOf('AIX'))
+    os = 'AIX';
+  else if (1+v.indexOf('OS/2'))
+    os = 'OS/2';
+  else if (1+v.indexOf('WEBTV'))
+    os = 'WebTv';
+  document.forms[0].OS.value=os;
+}
+//-->
+</SCRIPT>
+</HEAD>
+<BODY>
+Welcome to Brainy Software. We are happy to provide you
+with the version of device driver that works with
+your operating system.
+Please click the button below to start downloading.
+<BR>
+<FORM METHOD=POST ACTION="Download.jsp" 
+  onSubmit='getOperatingSystem()'>
+<INPUT TYPE=HIDDEN NAME=OS>
+<INPUT TYPE=SUBMIT VALUE="Download">
+</FORM>
+</BODY>
+</HTML>

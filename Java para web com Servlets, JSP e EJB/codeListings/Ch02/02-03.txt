@@ -1,0 +1,31 @@
+import javax.servlet.*;
+import java.util.Enumeration;
+import java.io.IOException;
+
+public class ConfigDemoServlet implements Servlet {
+
+  public void init(ServletConfig config) throws ServletException {
+    Enumeration parameters = config.getInitParameterNames();
+    while (parameters.hasMoreElements()) {
+      String parameter = (String) parameters.nextElement();
+      System.out.println("Parameter name : " + parameter);
+      System.out.println("Parameter value : " + 
+        config.getInitParameter(parameter));
+    }
+  }
+
+  public void destroy() {
+  }
+
+  public void service(ServletRequest request, ServletResponse response)
+    throws ServletException, IOException {
+  }
+
+  public String getServletInfo() {
+    return null;
+  }
+
+  public ServletConfig getServletConfig() {
+    return null;
+  }
+}

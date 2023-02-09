@@ -1,0 +1,9 @@
+public void init() {
+    try {
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      System.out.println("JDBC driver loaded");
+    }
+    catch (ClassNotFoundException e) {
+      System.out.println(e.toString());
+    }
+  }

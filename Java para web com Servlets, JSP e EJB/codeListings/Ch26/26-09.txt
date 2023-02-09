@@ -1,0 +1,6 @@
+<SCRIPT LANGUAGE="JavaScript">
+function createObject() {
+  var anArray = new Array();
+  return anArray;
+}
+</SCRIPT>

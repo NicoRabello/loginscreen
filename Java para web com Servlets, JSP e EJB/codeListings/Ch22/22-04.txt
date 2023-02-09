@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<TITLE>Checking if JavaScript is on in a JavaScript-capable browser</TITLE>
+</HEAD>
+<BODY>
+<SCRIPT LANGUAGE="JavaScript">
+  //your JavaScript code here
+</SCRIPT>
+<NOSCRIPT>
+Your browser understands JavaScript. However, the feature 
+is turned off. Please turn it on to enjoy the full 
+capability of this page.
+</NOSCRIPT>
+</BODY>
+</HTML>

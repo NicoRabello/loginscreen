@@ -1,0 +1,130 @@
+package com.brainysoftware.tassie.servlet;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import javax.naming.*;
+import javax.rmi.PortableRemoteObject;
+import com.brainysoftware.tassie.ejb.Search;
+import com.brainysoftware.tassie.ejb.SearchHome;
+
+public class SearchServlet extends HttpServlet {
+
+  private String keyword;
+
+  /**Process the HTTP Get request*/
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    displayPage(request, response);
+  }
+
+  /**Process the HTTP Post request*/
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    keyword = request.getParameter("keyword");
+    displayPage(request, response);
+  }
+
+  private void displayPage(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    /* In addition to the header and footer,
+       There are 4parts in this page:
+       1. The Welcome Title
+       2. Search form
+       3. The search result table
+       4. The link to the Check Shopping Cart page
+    */
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    // header
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Welcome to Tassie Online Bookstore</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+
+    // Welcome Title
+    out.println("<H2>Welcome To Tassie Online Bookstore</H2>");
+
+    // Search form
+    out.println("<BR>");
+    out.println("<FORM METHOD=POST>");
+    out.println("Title: <INPUT TYPE=TEXT NAME=keyword>");
+    out.println("<INPUT TYPE=SUBMIT VALUE=Search");
+    out.println("</FORM>");
+    out.println("<HR>");
+
+    // Search result
+    out.println("<BR>");
+    out.println("<H3>Search Result</H3>");
+    out.println("<BR>");
+    displaySearchResult(out);
+    out.println("<HR>");
+
+    // Link to the Check Shopping Cart link
+    out.println("<BR>");
+    out.println("<A HREF=com.brainysoftware.tassie.servlet.CheckCartServlet>Check Shopping Cart</A>");
+
+    // footer
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+
+    // Displaying the Search form
+
+  }
+
+  /**Clean up resources*/
+  private void displaySearchResult(PrintWriter out) {
+    if (keyword!=null && !keyword.trim().equals("")) {
+      // keyword okay, display the result here.
+
+      Properties properties = new Properties();
+      properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+      properties.put(Context.PROVIDER_URL, "localhost:1099");
+      try {
+        // Get a naming context
+        InitialContext jndiContext = new InitialContext(properties);
+
+        // Get a reference to the Bean
+        Object ref  = jndiContext.lookup("Search");
+
+        // Get a reference from this to the Bean's Home interface
+        SearchHome home = (SearchHome)
+          PortableRemoteObject.narrow (ref, SearchHome.class);
+
+        // Create an Adder object from the Home interface
+        Search searchBean = home.create();
+        ArrayList arrayList = searchBean.search(keyword);
+        int rowCount = arrayList.size();
+        out.println("<TABLE BORDER=1>");
+        out.println("<TR>");
+        out.println("<TH WIDTH=350>Title</TH>");
+        out.println("<TH WIDTH=150>Author</TH>");
+        out.println("<TH WIDTH=150>Publisher</TH>");
+        out.println("<TH WIDTH=50>&nbsp</TH>");
+        out.println("</TR>");
+
+        for (int i=0; i<rowCount; i++) {
+          String[] s = (String[]) arrayList.get(i);
+          out.println("<TR>");
+          out.println("<TD>" + s[1] + "</TD>");
+          out.println("<TD>" + s[2] + "</TD>");
+          out.println("<TD>" + s[3] + "</TD>");
+          out.println("<TD><A HREF=com.brainysoftware.tassie.servlet.BookDetailsServlet?bookId=" +
+            s[0] + ">Details</A></TD>");
+          out.println("</TR>");
+        }
+        out.println("</TABLE>");
+
+      }
+      catch(Exception e) {
+        System.out.println(e.toString());
+      }
+
+    }
+  }
+}

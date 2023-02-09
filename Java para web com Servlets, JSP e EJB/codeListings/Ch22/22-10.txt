@@ -1,0 +1,9 @@
+<SCRIPT LANGUAGE="JavaScript">
+function isNetscapeBrowser() {
+  return (navigator.appName=="Netscape");
+}
+
+function isMicrosoftBrowser() {
+  return (navigator.userAgent.indexOf("MSIE")!=-1);
+}
+</SCRIPT>

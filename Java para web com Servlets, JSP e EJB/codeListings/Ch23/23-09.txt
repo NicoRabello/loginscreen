@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<TITLE>Navigating to a new world</TITLE>
+</HEAD>
+<BODY>
+Please select one of our regional offices
+<BR>
+<FORM>
+<SELECT onChange="location=this.options[this.selectedIndex].value">
+<OPTION>Select a destination</OPTION>
+<OPTION VALUE="asia.html">Asia</OPTION>
+<OPTION VALUE="europe.html">Europe</OPTION>
+<OPTION VALUE="northAmerica.html">North America</OPTION>
+<OPTION VALUE="australasia.html">Australasia</OPTION>
+</SELECT>
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<TITLE>Creating a cookie with document.cookie</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+document.cookie="Quantity=7";
+</SCRIPT>
+</HEAD>
+<BODY>
+This page creates a cookie on the client side. 
+Make sure that your browser is set to accept cookies.
+</BODY>
+</HTML>

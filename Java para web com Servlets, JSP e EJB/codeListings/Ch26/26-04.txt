@@ -1,0 +1,13 @@
+<HTML>
+<SCRIPT LANGUAGE="JavaScript">
+var myArray = new Array();
+myArray[0] = "first element.";
+myArray[1] = "second element.";
+myArray[2] = "third element.";
+document.write(myArray.length + "<BR>");
+document.write(myArray[2] + "<BR>");
+delete myArray[2];
+document.write(myArray.length + "<BR>");
+document.write(myArray[2] + "<BR>");
+</SCRIPT>
+</HTML>

@@ -1,0 +1,57 @@
+package com.brainysoftware.tassie.ejb;
+
+import java.rmi.RemoteException;
+import javax.ejb.SessionBean;
+import javax.ejb.SessionContext;
+import java.sql.*;
+import java.util.*;
+import javax.naming.*;
+
+public class CartBean implements SessionBean {
+public void addToCart(String bookId, String quantity) {
+    String[] row = new String[6];
+    row[0] = bookId;
+    row[1] = quantity;
+
+    try {
+      InitialContext jndiContext = new InitialContext();
+      Object ref = jndiContext.lookup("BookDetails");
+      System.out.println("Got ref to BookDetails");
+      // don't need to use javax.rmi.PortableRemoteObject
+      // because this is a local client
+      BookDetailsHome home = (BookDetailsHome) ref;
+      System.out.println("Got home to BookDetails");
+      BookDetails bookDetails = home.create();
+      System.out.println("Got BookDetails");
+      String[] details = bookDetails.getBookDetails(bookId);
+      row[2] = details[1];
+      row[3] = details[2];
+      row[4] = details[3];
+      row[5] = details[4];
+    }
+    catch (Exception e) {
+      System.out.println(e.toString());
+    }
+    cart.add(row);
+
+  }
+
+  public ArrayList getCart() {
+    return cart;
+  }
+
+  public void ejbCreate() {
+  }
+
+  public void ejbRemove() {
+  }
+
+  public void ejbActivate() {
+  }
+
+  public void ejbPassivate() {
+  }
+
+  public void setSessionContext(SessionContext sc) {
+  }
+}

@@ -1,0 +1,310 @@
+package docman;
+import java.sql.*;
+import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.File;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+
+public class DBBean {
+
+  public static final String DATA_PATH =
+    "C:\\123Data\\JavaProjects\\docman\\Data\\";
+
+  public String getDataPath() {
+    return DATA_PATH;
+  }
+
+  // database connection
+  private Connection connection=null;
+  // JDBC URL, change the string value below
+  // appropriately
+  String dbUrl = "jdbc:odbc:docman";
+  // user name for database access
+  String dbUserName = "";
+  // password for database access
+  String dbPassword = "";
+  // JDBC driver name, the value depends
+  // on the driver you are using
+  String JDBCDriverName =
+    "sun.jdbc.odbc.JdbcOdbcDriver";
+
+  public void setUrl(String dbUrl) {
+    // this method allows the JDBC URL to be changed
+    // if the different one from the default
+    // is needed
+    this.dbUrl = dbUrl;
+  }
+
+  public void setDbUserName(String dbUserName) {
+    // this method allows the database
+    // user name to be changed
+    this.dbUserName = dbUserName;
+  }
+
+  public void setDbPassword(String dbPassword) {
+    // this method allows the database
+    // password to be changed
+    this.dbPassword = dbPassword;
+  }
+
+  public void setJDBCDriverName
+    (String JDBCDriverName) {
+    // this method allows the database
+    // JDBC driver to be changed
+    this.JDBCDriverName = JDBCDriverName;
+  }
+
+  public void connect() {
+    // try to connect to the database
+    // using url, username, and password
+    // previously set
+    connect(dbUrl, dbUserName, dbPassword);
+  }
+
+  public void connect
+    (String url, String userName, String password) {
+    // try to connect to the database
+    // using url, username, and password
+    // passed as parameters
+    try {
+      Class.forName( JDBCDriverName);
+      connection = DriverManager.getConnection(url,
+        userName, password);
+    }
+    catch (Exception e) {}
+  }
+
+  public ArrayList getChildObjects(String id,
+    String userName, String password) {
+    //the return value;
+    ArrayList records = new ArrayList();
+
+    try {
+      if (connection==null)
+        connect();
+
+      String sql = "SELECT ID, Type, Name" +
+        " FROM Objects" +
+        " WHERE ParentID=" +
+          " (SELECT ObjectID FROM Permissions" +
+          " WHERE ObjectID=" + id +
+          " AND UserID=" +
+            " (SELECT ID FROM Users" +
+            " WHERE UserName='" + userName + "'" +
+            " AND Password='" + password + "'))" +
+        " ORDER BY Type ASC";
+
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      while(r.next()) {
+        records.add(r.getString("ID") + "," +
+          r.getString("Type") + "," +
+          r.getString("Name"));
+      }
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+    return records;
+  }
+
+  public String getCookie(
+    HttpServletRequest request, String cookie) {
+    // returns the cookie value if the cookie
+    // is found in request, otherwise returns null
+    Cookie cookies[] = request.getCookies();
+    if (cookies!=null)
+      for (int i=0; i<cookies.length; ++i)
+        if (cookies[i].getName().equals(cookie))
+          return cookies[i].getValue();
+    return null;
+  }
+
+
+  public String getParentId(String objectId,
+    String userName, String password) {
+    String parentId = null;
+    String sql = "SELECT O.ParentID" +
+      " FROM Objects O, Users U, Permissions P" +
+      " WHERE O.ID=" + objectId +
+      " AND O.ParentID = P.ObjectID" +
+      " AND P.UserID = U.ID" +
+      " AND U.UserName='" + userName + "'" +
+      " AND U.Password='" + password + "'";
+    try {
+      if (connection==null)
+        connect();
+      Statement s = connection.createStatement();
+      // SQL code:
+      ResultSet r = s.executeQuery( sql );
+      while(r.next()) {
+        parentId = r.getString("ParentID");
+      }
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) { }
+    return parentId;
+  }
+
+  public boolean verifyUser(String userName,
+    String password) {
+    String sql = "SELECT ID FROM Users" +
+      " WHERE UserName='" + userName + "'" +
+      " AND Password='" + password + "'";
+    boolean retval = false;
+    try {
+      if (connection==null)
+        connect();
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      if (r.next()) {
+        retval = true;
+      }
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) {
+      return false;
+    }
+    return retval;
+  }
+
+  public String getFolderName(String id,
+    String userName, String password) {
+    String folderName = null;
+    String sql = "SELECT O.Name, O.ParentID" +
+      " FROM Objects O, Permissions P, Users U" +
+      " WHERE O.ID=" + id +
+      " AND O.ID = P.ObjectID" +
+      " AND P.UserID = U.ID" +
+      " AND U.UserName='" + userName + "'" +
+      " AND U.Password = '" + password + "'";
+    try {
+      if (connection==null)
+        connect();
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      while(r.next()) {
+        folderName = r.getString("Name");
+      }
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) { }
+    return folderName;
+  }
+
+  public String getFilename(String objectId,
+    String userName, String password) {
+    String filename = null;
+    String sql = "SELECT Name" +
+      " FROM Objects" +
+      " WHERE ID=" +
+        " (SELECT ObjectID FROM Permissions" +
+        " WHERE ObjectID=" + objectId +
+        " AND UserID=" +
+          " (SELECT ID FROM Users" +
+          " WHERE UserName='" + userName + "'" +
+          " AND Password='" + password + "'))";
+    try {
+      if (connection==null)
+        connect();
+
+      java.sql.Statement s =
+        connection.createStatement();
+      java.sql.ResultSet r = s.executeQuery( sql );
+      if (r.next())
+        filename = r.getString("Name");
+      s.close(); // Also closes ResultSet
+    }
+    catch (Exception e) {}
+    return filename;
+  }
+
+  public boolean hasUploadPermission(String id,
+    String userName, String password) {
+
+    boolean retval = false;
+    try {
+      if (connection==null)
+        connect();
+
+      String sql = "SELECT ObjectID FROM Permissions" +
+        " WHERE ObjectID=" + id +
+        " AND UserID=" +
+          " (SELECT ID FROM Users" +
+          " WHERE UserName='" + userName + "'" +
+          " AND Password='" + password + "')";
+
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      while(r.next()) {
+        retval = true;
+      }
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+    return retval;
+  }
+
+  synchronized public int getLastObjectId() {
+    int retval = 0;
+    try {
+      if (connection==null)
+        connect();
+
+      String sql = "SELECT MAX(ID) AS LastID FROM Objects";
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      while (r.next())
+        retval = Integer.parseInt(r.getString("LastID"));
+
+      s.close(); // Also closes ResultSet
+    }
+    catch(Exception e) {}
+    return retval;
+  }
+
+  public void insertObject(String parentId,
+    String objectId, String filename) {
+
+    try {
+      if (connection==null)
+        connect();
+      // insert record into the Objects table
+      String sql = "INSERT INTO Objects" +
+        " (ID, ParentID, Type, Name)" +
+        " VALUES" +
+        " (" + objectId +
+        "," + parentId +
+        ",1," +
+        "'" + filename + "')";
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      s.close();
+    }
+    catch(Exception e) {}
+  }
+
+  public void insertPermissions(String parentId,
+    String objectId) {
+    try {
+      if (connection==null)
+        connect();
+
+      // insert records to the Permissions table
+      String sql = "INSERT INTO Permissions" +
+        " (ObjectID, UserID)" +
+        " SELECT " + objectId + ", UserID" +
+        " FROM Permissions" +
+        " WHERE ObjectID=" + parentId;
+      Statement s = connection.createStatement();
+      ResultSet r = s.executeQuery( sql );
+      s.close();
+    }
+    catch(Exception e) {}
+  }
+}

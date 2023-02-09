@@ -1,0 +1,19 @@
+<jsp:useBean id="theBean" scope="page"
+  class="com.brainysoftware.web.FileDownload" />
+<%
+  String userName = request.getParameter("userName");
+  String password = request.getParameter("password");
+
+  // only allow download if the user supplied the 
+  // correct user name and passwrd
+
+  if (userName!=null && password !=null &&
+    userName.equals("james") &&
+    password.equals("cook")) {
+
+    String filepath = "C:\\TV.bmp";
+    theBean.download(response, filepath);
+  }
+  else
+    out.print("Login incorrect");
+%>

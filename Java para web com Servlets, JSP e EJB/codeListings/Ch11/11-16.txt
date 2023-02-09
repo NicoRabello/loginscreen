@@ -1,0 +1,88 @@
+package com.brainysoftware;
+
+import javax.servlet.jsp.*;
+import javax.servlet.jsp.tagext.*;
+
+public class EncoderTag implements BodyTag {
+
+  PageContext pageContext;
+  BodyContent bodyContent;
+
+  /**
+   * Encode an HTML tag so it will be displayed
+   * as it is on the browser.
+   * Particularly, this method searches the
+   * passed in String and replace every occurrence
+   * of the following character:
+   * '<' with "&lt;"
+   * '>' with "&gt;"
+   * '&' with "&amp;"
+   * //'"' with "&quot;"
+   * ' ' with "&nbsp;"
+   */
+  private String encodeHtmlTag(String tag) {
+    if (tag==null)
+      return null;
+    int length = tag.length();
+    StringBuffer encodedTag = new StringBuffer(2 * length);
+    for (int i=0; i<length; i++) {
+      char c = tag.charAt(i);
+      if (c=='<')
+        encodedTag.append("&lt;");
+      else if (c=='>')
+        encodedTag.append("&gt;");
+      else if (c=='&')
+        encodedTag.append("&amp;");
+      else if (c=='"')
+        encodedTag.append("&quot;");  
+        //when trying to output text as tag's value as in
+        // values="???".
+      else if (c==' ')
+        encodedTag.append("&nbsp;");
+      else
+        encodedTag.append(c);
+
+    }
+    return encodedTag.toString();
+  }
+
+  public void setParent(Tag t) {
+  }
+
+  public void setPageContext(PageContext p) {
+    pageContext = p;
+  }
+
+  public void release() {
+  }
+
+  public Tag getParent() {
+    return null;
+  }
+
+  public int doStartTag() {
+    return EVAL_BODY_BUFFERED;
+  }
+
+  public void setBodyContent(BodyContent bodyContent) {
+    this.bodyContent = bodyContent;
+  }
+
+  public void doInitBody() {
+
+  }
+  public int doAfterBody() {
+    String content = bodyContent.getString();
+    try{
+      JspWriter out = bodyContent.getEnclosingWriter();
+      out.print(encodeHtmlTag(content));
+    }
+    catch(Exception e) {}
+
+    return SKIP_BODY;
+  }
+
+  public int doEndTag() throws JspException {
+    return EVAL_PAGE;
+  }
+}

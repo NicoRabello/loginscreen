@@ -1,0 +1,8 @@
+  public void doPost(HttpServletRequest request,
+    HttpServletResponse response) 
+    throws ServletException, IOException {
+    
+    sendPageHeader(response);
+    updateRecord(request, response);
+    sendPageFooter(response);
+  }

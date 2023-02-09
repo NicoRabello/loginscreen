@@ -1,0 +1,37 @@
+private void sendSqlForm(HttpServletRequest request,
+    HttpServletResponse response)
+    throws ServletException, IOException {
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>SQL Tool Servlet</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<BR><H2>SQL Tool</H2>");
+    out.println("<BR>Please type your SQL statement in the following box.");
+    out.println("<BR>");
+    out.println("<BR><FORM METHOD=POST>");
+    out.println("<TEXTAREA NAME=sql COLS=80 ROWS=8>");
+    String sql = request.getParameter("sql");
+
+    // Reprint the previously entered SQL in the TextArea
+    if (sql!=null)
+      out.println(sql);
+
+    out.println("</TEXTAREA>");
+    out.println("<BR>");
+    out.println("<INPUT TYPE=SUBMIT VALUE=Execute>");
+    out.println("</FORM>");
+    out.println("<BR>");
+    out.println("<HR>");
+    out.println("<BR>");
+
+    if (sql!=null) {
+      executeSql(sql.trim(), response);
+    }
+
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }

@@ -1,0 +1,67 @@
+package com.brainysoftware.tassie.servlet;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import javax.naming.*;
+import javax.rmi.PortableRemoteObject;
+import com.brainysoftware.tassie.ejb.Cart;
+import com.brainysoftware.tassie.ejb.CartHome;
+
+
+public class AddToCartServlet extends HttpServlet {
+  /**Process the HTTP Post request*/
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    // header
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Add to Cart</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+    String bookId = request.getParameter("bookId");
+    String quantity = request.getParameter("quantity");
+    if (bookId!=null && quantity!=null &&
+      !bookId.trim().equals("") && !quantity.trim().equals("")) {
+      try {
+        HttpSession session = request.getSession(true);
+        Cart cartBean = (Cart) session.getAttribute("cart");
+        if (cartBean==null) { // new session
+          Properties properties = new Properties();
+          properties.put(Context.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+          properties.put(Context.PROVIDER_URL, "localhost:1099");
+          // Get a naming context
+          InitialContext jndiContext = new InitialContext(properties);
+
+          // Get a reference to the Bean
+          Object ref  = jndiContext.lookup("Cart");
+
+          // Get a reference from this to the Bean's Home interface
+          CartHome home = (CartHome)
+          PortableRemoteObject.narrow (ref, CartHome.class);
+
+          // Create an Adder object from the Home interface
+          cartBean = home.create();
+        }
+        cartBean.addToCart(bookId, quantity);
+        session.setAttribute("cart", cartBean);
+        out.println("<B>The book has been added to the shopping cart</B>");
+
+      }
+      catch(Exception e) {
+        out.println(e.toString());
+      }
+    }
+    out.println("<BR>");
+    out.println("<BR>");
+    out.println("<A HREF=com.brainysoftware.tassie.servlet.SearchServlet>" +
+      "Go back to the Search page</A>");
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }
+}

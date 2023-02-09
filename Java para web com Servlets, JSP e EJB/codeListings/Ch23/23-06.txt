@@ -1,0 +1,9 @@
+<HTML>
+<HEAD>
+<TITLE>Going back to the previous page</TITLE>
+</HEAD.
+<BODY>
+The password you typed in is not long enough.
+  Please <A HREF="javascript:history.back()">go back</A> to correct it.
+</BODY>
+</HTML>

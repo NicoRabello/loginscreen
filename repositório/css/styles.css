@@ -1,0 +1,30 @@
+* {
+    font-family: 'Source Serif Pro', serif;
+    text-decoration: #fff;
+    background-color: rgb(44, 42, 42);
+    color: #fff;
+}
+
+header {
+    display:center;
+    align-items:absolute;
+    text-align: center;
+    justify-content:space-between;
+}
+
+footer {
+    background-color:rgb(54, 52, 52);
+    position: relative;
+}
+
+main form .password-container i {
+    position: absolute;
+    right: 10%;
+    top: 35%;
+    color: #777;
+    cursor: pointer;
+}
+
+main form .password-container #eye {
+    display: none;
+}

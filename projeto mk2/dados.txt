@@ -1,0 +1,41 @@
+Geral:
+Area: 
+
+valor atualizado
+revisão
+classificação de valor
+assunto
+
+Situação:
+Classe
+tribunal/instâncias
+orgão judicial
+representação da parte
+juízo
+número do processo
+rito
+
+Distribuição: 
+tipo
+direcionada ou não
+data
+chefia
+procuradoria
+procurador
+
+Partes: 
+Tipo de participação
+tipo de pessoa=doc
+nome da parte
+profissão
+endereço
+
+informações:
+trâmite
+ajuizamento
+complexidade do processo
+auditoria
+
+movimentações:
+
+

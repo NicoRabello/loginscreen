@@ -1,0 +1,31 @@
+<HTML>
+<SCRIPT LANGUAGE="JavaScript">
+
+function deleteElement(array, n) {
+  //delete the nth element of array
+  var length = array.length;
+  if (n >= length || n<0)
+    return;
+
+  for (var i=n; i<length-1; i++)
+    array[i] = array[i+1];
+  array.length--;
+}
+
+var myArray = new Array();
+myArray[0] = "first element.";
+myArray[1] = "second element.";
+myArray[2] = "third element.";
+myArray[3] = "4th";
+
+document.write("length : " + myArray.length + "<BR>");
+for (var i=0; i<myArray.length; i++) 
+  document.write("element " + i + " : " + myArray[i] + "<BR>");
+
+deleteElement(myArray, 1);
+document.write("length : " + myArray.length + "<BR>");
+for (var i=0; i<myArray.length; i++) 
+  document.write("element " + i + " : " + myArray[i] + "<BR>");
+
+</SCRIPT>
+</HTML>

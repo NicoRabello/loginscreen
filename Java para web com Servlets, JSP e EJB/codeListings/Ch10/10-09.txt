@@ -1,0 +1,3 @@
+<jsp:useBean id="theBean" class="com.brainysoftware.CalculatorBean">
+<jsp:setProperty name="theBean" property="*"/>
+</jsp:useBean>

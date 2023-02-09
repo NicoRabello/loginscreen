@@ -1,0 +1,7 @@
+<SCRIPT LANGUAGE="JavaScript">
+function getTotalCost() {
+  var freight = 2;
+  var totalCost =  freight + (document.forms[0].price.value - 0);
+  alert(totalCost); //result: 302
+}
+</SCRIPT>

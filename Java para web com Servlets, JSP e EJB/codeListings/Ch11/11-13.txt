@@ -1,0 +1,61 @@
+package com.brainysoftware;
+
+import javax.servlet.jsp.*;
+import javax.servlet.jsp.tagext.*;
+
+public class PowerTag implements IterationTag {
+  PageContext pageContext;
+
+  private int number;
+  private int power;
+  private int counter;
+  private int result = 1;
+
+  // the setter for number
+  public void setNumber(int number) {
+    this.number = number;
+  }
+
+  // the setter for power
+  public void setPower(int power) {
+    this.power = power;
+  }
+
+  public void setParent(Tag t) {
+  }
+
+  public void setPageContext(PageContext p) {
+    pageContext = p;
+  }
+
+  public void release() {
+  }
+
+  public Tag getParent() {
+    return null;
+  }
+
+  public int doStartTag() {
+    return EVAL_BODY_INCLUDE;
+  }
+
+  public int doAfterBody() {
+    counter++;
+    result *= number;
+    if (counter==power)
+      return SKIP_BODY;
+    else 
+      return EVAL_BODY_AGAIN;
+  }
+
+  public int doEndTag() throws JspException {
+    System.out.println("doEndTag");
+    try {
+      JspWriter out = pageContext.getOut();
+      out.println(number + "^" + power + "=" + result);
+    }
+    catch(Exception e) {
+    }
+    return EVAL_PAGE;
+  }
+}

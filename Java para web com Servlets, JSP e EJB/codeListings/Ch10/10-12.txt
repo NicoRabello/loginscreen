@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<TITLE>Login Page</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<FORM METHOD=POST ACTION=SQLTool.jsp>
+<TABLE>
+<TR>
+  <TD>User Name:</TD>
+  <TD><INPUT TYPE=TEXT NAME=userName></TD>
+</TR>
+<TR>
+  <TD>Password:</TD>
+  <TD><INPUT TYPE=PASSWORD NAME=password></TD>
+</TR>
+<TR>
+  <TD><INPUT TYPE=RESET></TD>
+  <TD><INPUT TYPE=SUBMIT VALUE="Login"></TD>
+</TR>
+</TABLE>
+</FORM>
+</CENTER>
+</BODY>
+</HTML>

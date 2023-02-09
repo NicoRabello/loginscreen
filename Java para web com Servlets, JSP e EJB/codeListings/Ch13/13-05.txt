@@ -1,0 +1,12 @@
+<HTML>
+<HEAD>
+<TITLE>File Upload</TITLE>
+</HEAD>
+<BODY>
+<FORM ACTION=http://localhost:8080/myApp/servlet/FileUpload.jsp ENCTYPE="MULTIPART/FORM-DATA" METHOD=POST>
+Select file to upload <INPUT TYPE=FILE Name=Filename>
+<BR>
+<INPUT TYPE=SUBMIT VALUE="Upload">
+</FORM>
+</BODY>
+</HTML>

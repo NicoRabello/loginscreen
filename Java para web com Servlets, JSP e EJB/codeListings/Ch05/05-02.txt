@@ -1,0 +1,10 @@
+public void doPost(HttpServletRequest request, 
+  HttpServletResponse response) 
+  throws ServletException, IOException {
+
+  keyword = request.getParameter("keyword");
+  sendPageHeader(response);
+  sendSearchForm(response);
+  sendSearchResult(response);
+  sendPageFooter(response);
+}

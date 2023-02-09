@@ -1,0 +1,9 @@
+import java.applet.*;
+
+public class MyApplet extends Applet {
+
+  public int myMethod(int a) {
+    return (5 + a);
+  }
+
+}

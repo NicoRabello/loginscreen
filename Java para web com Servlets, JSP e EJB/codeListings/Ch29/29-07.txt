@@ -1,0 +1,62 @@
+package com.brainysoftware.tassie.ejb;
+
+import java.rmi.RemoteException;
+import javax.ejb.SessionBean;
+import javax.ejb.SessionContext;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class BookDetailsBean implements SessionBean {
+
+
+  private Connection getConnection() {
+    Connection connection = null;
+    try {
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      connection = DriverManager.getConnection("jdbc:odbc:TassieDB");
+    }
+    catch (Exception e) {
+    }
+    return connection;
+  }
+
+  public String[] getBookDetails(String bookId) {
+    String[] row = null;
+    try {
+      Statement statement = getConnection().createStatement();
+      String sql = "SELECT Id, Title, Author, Publisher, Price" +
+        " FROM Books" +
+        " WHERE Id=" + bookId;
+
+      ResultSet rs = statement.executeQuery(sql);
+      if (rs.next()) {
+        row = new String[5];
+        row[0] = rs.getString("Id");
+        row[1] = rs.getString("Title");
+        row[2] = rs.getString("Author");
+        row[3] = rs.getString("Publisher");
+        row[4] = rs.getString("Price");
+      }
+      rs.close();
+      statement.close();
+    }
+    catch (Exception e) {
+    }
+    return row;
+  }
+
+  public void ejbCreate() {
+  }
+
+  public void ejbRemove() {
+  }
+
+  public void ejbActivate() {
+  }
+
+  public void ejbPassivate() {
+  }
+
+  public void setSessionContext(SessionContext sc) {
+  }
+}

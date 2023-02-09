@@ -1,0 +1,9 @@
+package com.brainysoftware.ejb;
+
+import java.rmi.RemoteException;
+import javax.ejb.CreateException;
+import javax.ejb.EJBHome;
+
+public interface AdderHome extends EJBHome {
+  Adder create() throws RemoteException, CreateException;
+}

@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>Direct applet-to-applet communication</TITLE>
+</HEAD>
+<BODY>
+
+You can send a message to the second applet from the first applet.
+<BR>Just type your message in the text box in the first applet,
+<BR>and click the button.
+<BR>
+<APPLET
+  CODEBASE = "."
+  CODE     = "MyApplet.class"
+  NAME     = "TestApplet"
+  WIDTH    = 300
+  HEIGHT   = 50
+  HSPACE   = 0
+  VSPACE   = 0
+  ALIGN    = middle
+  MAYSCRIPT
+>
+</APPLET>
+<BR><BR>
+<APPLET
+  CODEBASE = "."
+  CODE     = "SecondApplet.class"
+  NAME     = "SecondApplet"
+  WIDTH    = 300
+  HEIGHT   = 50
+  HSPACE   = 0
+  VSPACE   = 0
+  ALIGN    = middle
+>
+</APPLET>
+</BODY>
+</HTML>

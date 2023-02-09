@@ -1,0 +1,10 @@
+function deleteElement(array, n) {
+  //delete the nth element of array
+  var length = array.length;
+  if (n >= length || n<0)
+    return;
+
+  for (var i=n; i<length-1; i++)
+    array[i] = array[i+1];
+  array.length--;
+}

@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<TITLE>Checking if an applet is ready</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+function isAppletReady(applet) {
+  return applet.isActive();
+} 
+</SCRIPT>
+</HEAD>
+<BODY>
+<APPLET
+  CODEBASE = "."
+  CODE     = "MyApplet.class"
+  NAME     = "TestApplet"
+  WIDTH    = 200
+  HEIGHT   = 50
+  HSPACE   = 0
+  VSPACE   = 0
+  ALIGN    = middle
+>
+</APPLET>
+Click the button below to check if the applet is ready.
+<BR>
+<FORM>
+<INPUT TYPE=button VALUE="Check if the applet is ready" 
+  onClick="if (!isAppletReady(document.applets[0])) alert('not ready');" >
+</FORM>
+</BODY>
+</HTML>

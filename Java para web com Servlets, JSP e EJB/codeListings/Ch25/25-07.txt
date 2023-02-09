@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<TITLE>Using the setCookie function</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+
+function setCookie(name, value, expires, path, domain, secure) { 
+  document.cookie = name + "=" + escape(value) + 
+    ((expires) ? "; expires=" + expires.toGMTString() : "") + 
+    ((path) ? "; path=" + path : "") + 
+    ((domain) ? "; domain=" + domain : "") + 
+    ((secure) ? "; secure" : ""); 
+}
+
+function fixDate(date) { 
+  var base = new Date(0); 
+  var skew = base.getTime(); 
+  if (skew > 0) date.setTime(date.getTime() - skew);
+}
+
+var expiryDate = new Date();
+fixDate(expiryDate);
+expiryDate.setTime(expiryDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+setCookie("authorizationLevel", 2, expiryDate);
+
+</SCRIPT>
+</HEAD>
+<BODY>
+A cookie which is valid for a year has been created for this page.
+</BODY>
+</HTML>

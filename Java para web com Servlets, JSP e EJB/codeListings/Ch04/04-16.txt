@@ -1,0 +1,5 @@
+  public void doGet(HttpServletRequest request, 
+    HttpServletResponse response) 
+  throws ServletException, IOException {
+    sendSqlForm(request, response);
+  }

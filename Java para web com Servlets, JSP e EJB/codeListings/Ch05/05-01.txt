@@ -1,0 +1,7 @@
+public void doGet(HttpServletRequest request, 
+  HttpServletResponse response) 
+  throws ServletException, IOException {
+    sendPageHeader(response);
+    sendSearchForm(response);
+    sendPageFooter(response);
+  }

@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<TITLE>Using the isEmpty Function</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+function isEmpty(str) {
+  if (str==null || str=="")
+    return true;
+  return false;
+}
+
+function validate(userName, password) {
+  if (isEmpty(userName)) {
+    alert('User name must have a value');    
+    return false;
+  }
+  if (isEmpty(password)) {
+    alert('Password must have a value');
+    return false;
+  }
+  return true;
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM ACTION=Login.jsp METHOD=POST 
+  OnSubmit="return validate(this.UserName.value, 
+    this.Password.value);">
+User Name: <INPUT TYPE=TEXT NAME=UserName>
+<BR>
+Password: <INPUT TYPE=PASSWORD NAME=Password>
+<BR>
+<INPUT TYPE=SUBMIT VALUE="Login">
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,134 @@
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import java.sql.*;
+import com.brainysoftware.java.StringUtil;
+
+public class SearchServlet extends HttpServlet {
+
+  private String keyword = "";
+
+  public void init() {
+    try {
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      System.out.println("JDBC driver loaded");
+    }
+    catch (ClassNotFoundException e) {
+      System.out.println(e.toString());
+    }
+  }
+
+  /**Process the HTTP Get request*/
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    sendPageHeader(response);
+    sendSearchForm(response);
+    sendPageFooter(response);
+  }
+
+  /**Process the HTTP Post request*/
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    keyword = request.getParameter("keyword");
+    sendPageHeader(response);
+    sendSearchForm(response);
+    sendSearchResult(response);
+    sendPageFooter(response);
+  }
+
+  void sendSearchResult(HttpServletResponse response)
+    throws IOException {
+    PrintWriter out = response.getWriter();
+    try {
+      Connection con =
+        DriverManager.getConnection("jdbc:odbc:JavaWeb");
+      System.out.println("got connection");
+
+      Statement s = con.createStatement();
+
+      out.println("<TABLE>");
+      out.println("<TR>");
+      out.println("<TH>First Name</TH>");
+      out.println("<TH>Last Name</TH>");
+      out.println("<TH>User Name</TH>");
+      out.println("<TH>Password</TH>");
+      out.println("<TH></TH>");
+      out.println("<TH></TH>");
+      out.println("</TR>");
+      String sql = 
+        "SELECT Id, FirstName, LastName, UserName, Password" +
+        " FROM Users" +
+        " WHERE FirstName LIKE '%" +
+        StringUtil.fixSqlFieldValue(keyword) + "%'" +
+        " OR LastName LIKE '%" +
+        StringUtil.fixSqlFieldValue(keyword) + "%'";
+      ResultSet rs = s.executeQuery(sql);
+      while (rs.next()) {
+        String id = rs.getString(1);
+        out.println("<TR>");
+        out.println("<TD>" + StringUtil.encodeHtmlTag(rs.getString(2)) + "</TD>");
+        out.println("<TD>" + StringUtil.encodeHtmlTag(rs.getString(3)) + "</TD>");
+        out.println("<TD>" + StringUtil.encodeHtmlTag(rs.getString(4)) + "</TD>");
+        out.println("<TD>" + StringUtil.encodeHtmlTag(rs.getString(5)) + "</TD>");
+        out.println("<TD><A HREF=DeleteServlet?id=" + id + ">Delete</A></TD>");
+        out.println("<TD><A HREF=UpdateServlet?id=" + id + ">Update</A></TD>");
+        out.println("</TR>");
+      }
+      s.close();
+      con.close();
+    }
+    catch (SQLException e) {
+    }
+    catch (Exception e) {
+    }
+    out.println("</TABLE>");
+  }
+
+  /**
+   * Send the HTML page header, including the title
+   * and the <BODY> tag
+   */
+  private void sendPageHeader(HttpServletResponse response)
+    throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    out.println("<HTML>");
+    out.println("<HEAD>");
+    out.println("<TITLE>Displaying Selected Record(s)</TITLE>");
+    out.println("</HEAD>");
+    out.println("<BODY>");
+    out.println("<CENTER>");
+  }
+
+  /**
+   * Send the HTML page footer, i.e. the </BODY>
+   * and the </HTML>
+   */
+  private void sendPageFooter(HttpServletResponse response)
+    throws ServletException, IOException {
+    PrintWriter out = response.getWriter();
+    out.println("</CENTER>");
+    out.println("</BODY>");
+    out.println("</HTML>");
+  }
+
+  /**Send the form where the user can type in
+   * the details for a new user
+   */
+  private void sendSearchForm(HttpServletResponse response)
+    throws IOException {
+
+    PrintWriter out = response.getWriter();
+    out.println("<BR><H2>Search Form</H2>");
+    out.println("<BR>Please enter the first name, last name or part of any.");
+    out.println("<BR>");
+    out.println("<BR><FORM METHOD=POST>");
+    out.print("Name: <INPUT TYPE=TEXT Name=keyword");
+    out.print(" VALUE=\"" + StringUtil.encodeHtmlTag(keyword) + "\"");
+    out.println(">");
+    out.println("<INPUT TYPE=SUBMIT>");
+    out.println("</FORM>");
+    out.println("<BR>");
+    out.println("<BR>");
+  }
+}

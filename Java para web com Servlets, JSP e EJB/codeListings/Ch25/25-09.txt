@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<TITLE>Writing and Reading Cookies</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+
+function setCookie(name, value, expires, path, domain, secure) { 
+  document.cookie = name + "=" + escape(value) + 
+    ((expires) ? "; expires=" + expires.toGMTString() : "") + 
+    ((path) ? "; path=" + path : "") + 
+    ((domain) ? "; domain=" + domain : "") + 
+    ((secure) ? "; secure" : ""); 
+}
+
+function getCookie(name) {
+  var cName = name + "=";
+  var dc = document.cookie;
+  if (dc.length>0) {
+    begin = dc.indexOf(cName);
+    if (begin != -1) {
+      begin += cName.length;
+      end = dc.indexOf(";", begin);
+      if (end == -1) end = dc.length;
+        return unescape(dc.substring(begin,end));
+    }
+  }
+  return null;
+}
+
+</SCRIPT>
+</HEAD>
+<BODY>
+Type in your user id, and then click the Create Cookie button.
+A cookie will be created for you.
+<BR>
+<FORM>
+User ID: <INPUT TYPE=TEXT NAME=UserID>
+<BR>
+<INPUT TYPE=BUTTON VALUE="Create Cookie"
+onClick='setCookie("UserID", document.forms[0].UserID.value)'>
+<BR>
+Click the Read Cookie button to display the cookie.
+<INPUT TYPE=BUTTON VALUE="Read Cookie"
+onClick='alert(getCookie("UserID"))'>
+</FORM>
+</BODY>
+</HTML>

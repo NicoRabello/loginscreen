@@ -1,0 +1,76 @@
+import java.io.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import com.sun.xml.tree.*;
+
+public class TocBean {
+
+  DocumentBuilderFactory factory;
+  Document document;
+  StringBuffer output = new StringBuffer(2048);
+  int objectId = 1;
+
+  public String getString() {
+    return output.toString();
+  }
+
+  public void getToc(String tocFilename) {
+    factory = DocumentBuilderFactory.newInstance();
+    try {
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      document = builder.parse( new File(tocFilename) );
+      Node rootNode = document.getFirstChild();
+      NamedNodeMap nnm = rootNode.getAttributes();
+      if (nnm!= null) {
+        Node title = nnm.getNamedItem("title" );
+        Node url = nnm.getNamedItem("url");
+        // output the first element of the following form
+        // var e1 = createObject(1, "book title", "book url.html");
+        output.append("var e1 = createObject(1, \"" +
+          title.getNodeValue() + "\",  \"" +
+          url.getNodeValue() + "\");\n");
+      }
+      getChildNode(rootNode, output);
+    }
+    catch (Exception e) {
+      e.toString();
+    }
+  }
+
+  void getChildNode(Node parentNode, StringBuffer s) {
+    try {
+      int currentObjectId = objectId;
+      Node childNode = parentNode.getFirstChild();
+      // get chapters' & headings' titles and URLs
+      while (childNode != null) {
+        String nodeName = childNode.getNodeName();
+        if (nodeName!= null && (nodeName.equals("chapter") ||
+          nodeName.startsWith("heading")) ) {
+
+          objectId++;
+          NamedNodeMap nnm = childNode.getAttributes();
+          if (nnm!= null) {
+            Node title = nnm.getNamedItem("title" );
+            Node url = nnm.getNamedItem("url");
+            s.append("var e" + objectId + " = 
+              createObject(" + objectId + ", " +
+              (title==null? "null" : "\"" + title.getNodeValue() + 
+              "\"") + ", " +
+              (url==null? "null" : "\"" + url.getNodeValue() + 
+              "\"") + ");\n");
+            s.append("append(e" + currentObjectId + " , " + 
+              "e" + objectId + ");\n");
+          }
+          if (childNode.hasChildNodes())
+            getChildNode(childNode, s);
+        }
+        childNode = childNode.getNextSibling();
+      } // end while
+    }
+    catch (Exception e) {
+      System.out.println("Error:" + e.toString() );
+    }
+  }
+
+
+} // end class

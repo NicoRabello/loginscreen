@@ -1,0 +1,9 @@
+package com.brainysoftware.tassie.ejb;
+
+import java.rmi.RemoteException;
+import javax.ejb.CreateException;
+import javax.ejb.EJBHome;
+
+public interface SearchHome extends EJBHome {
+  Search create() throws RemoteException, CreateException;
+}

@@ -1,0 +1,52 @@
+public void executeSql(String sql, HttpServletResponse response)
+    throws ServletException, IOException {
+
+    PrintWriter out = response.getWriter();
+    try {
+      //Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+      Connection con = DriverManager.getConnection("jdbc:odbc:JavaWeb");
+      System.out.println("got connection");
+
+      Statement s = con.createStatement();
+
+      if (sql.toUpperCase().startsWith("SELECT")) {
+        out.println("<TABLE BORDER=1>");
+        ResultSet rs = s.executeQuery(sql);
+        ResultSetMetaData rsmd = rs.getMetaData();
+        // Write table headings
+        int columnCount = rsmd.getColumnCount();
+        out.println("<TR>");
+        for (int i=1; i<=columnCount; i++) {
+          out.println("<TD><B>" + rsmd.getColumnName(i) + "</B></TD>\n");
+        }
+        out.println("</TR>");
+        while (rs.next()) {
+          out.println("<TR>");
+          for (int i=1; i<=columnCount; i++) {
+            out.println("<TD>" + StringUtil.encodeHtmlTag(rs.getString(i)) + "</TD>" );
+          }
+          out.println("</TR>");
+        }
+        rs.close();
+        out.println("</TABLE>");
+      }
+      else {
+        int i = s.executeUpdate(sql);
+        out.println("Record(s) affected: " + i);
+      }
+      s.close();
+      con.close();
+      out.println("</TABLE>");
+    }
+    catch (SQLException e) {
+      out.println("<B>Error</B>");
+      out.println("<BR>");
+      out.println(e.toString());
+    }
+    catch (Exception e) {
+      out.println("<B>Error</B>");
+      out.println("<BR>");
+      out.println(e.toString());
+    }
+  }
+}

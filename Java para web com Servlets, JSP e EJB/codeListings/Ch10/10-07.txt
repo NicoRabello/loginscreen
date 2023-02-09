@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<TITLE>Passing a value</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+Please type in a number in the box
+<BR>
+<FORM METHOD=POST ACTION=SimplePage.jsp>
+<INPUT TYPE=TEXT NAME=memory>
+<INPUT TYPE=SUBMIT>
+</FORM>
+</CENTER>
+</BODY>
+</HTML>

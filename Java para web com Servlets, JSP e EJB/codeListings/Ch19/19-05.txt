@@ -1,0 +1,180 @@
+<jsp:useBean id="TocBeanId" scope="page" class="TocBean" />
+<HTML>
+<HEAD>
+<TITLE>Table of Contents</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--  Hiding Script
+
+var selectedElementId = 1;
+var root;
+
+function createObject(id, title, url) {
+  var element = new Array();
+  element[0] = id;
+  element[1] = title;
+  element[2] = url;
+  element[3] = 0;
+  return element;
+}
+
+function append(parent, child) {
+  parent[parent.length] = child;
+}
+
+function redrawTree() {
+  var doc = top.treeFrame.window.document;
+  doc.clear();
+  doc.write("<HTML><HEAD><STYLE TYPE=\"text/css\">\n" +
+    ".normal:link { text-decoration:none; color:black; font-family:verdana; font-size: 8pt; }\n" +
+    ".selected:link { text-decoration:none; color:red; font-family:verdana; font-size: 9pt; }\n" +
+    "</STYLE></HEAD>");
+
+  doc.write("<BODY BGCOLOR='#ffffff'>");
+  redrawNode(root, doc, 0, 1, "");
+  doc.write("</BODY></HTML>");
+  doc.close();
+}
+
+function closeBook() {
+  root[3] = 0;
+  redrawTree();
+}
+
+function openBook() {
+  root[3] = 1;
+  redrawTree();
+}
+
+function redrawNode(
+  foldersNode, doc, level, lastNode, leftSide) {
+  var j=0;
+  var i=0;
+  var id = foldersNode[0];
+  var title = foldersNode[1];
+  var url = foldersNode[2];
+  var hasSubNode = (foldersNode.length>4);
+  var expanded = foldersNode[3];
+
+
+  doc.write("<TABLE BORDER=0 CELLSPACING=0" +
+    " CELLPADDING=0>");
+  doc.write("<TR><TD VALIGN=middle NOWRAP>");
+  doc.write(leftSide);
+
+  if (id==1) { // this is the book
+    if (root[3]==0)
+      doc.write("<A HREF='javascript:top.openBook()'><IMG SRC=images/ClosedBook.gif BORDER=0></A>");
+    else
+      doc.write("<A HREF='javascript:top.closeBook()'><IMG SRC=images/OpenBook.gif BORDER=0></A>");
+  }
+
+  var nodeLink =
+    "<A HREF='javascript:top.clickNode(" + id + ")'>";
+
+  if (level>0)
+    if (lastNode) { //the last folder in array
+      if (hasSubNode) {
+        if (expanded)
+          doc.write(nodeLink +
+"<IMG SRC='images/LastNodeMinus.gif'" +
+" BORDER=0 WIDTH=16 HEIGHT=22>" + "</A>");
+        else
+          doc.write(nodeLink +
+"<IMG SRC='images/LastNodePlus.gif'" +
+" BORDER=0 WIDTH=16 HEIGHT=22>" + "</A>");
+      }
+      else
+        doc.write("<IMG SRC='images/LastNode.gif'" +
+          " WIDTH=16 HEIGHT=22>");
+
+      leftSide += "<IMG SRC='images/blank.gif'" +
+        " WIDTH=16 HEIGHT=22>";
+    }
+    else { //not last folder
+      if (hasSubNode) {
+        if (expanded)
+          doc.write(nodeLink +
+"<IMG SRC='images/NodeMinus.gif'" +
+" BORDER=0 WIDTH=16 HEIGHT=22>" + "</A>");
+        else
+          doc.write(nodeLink +
+            "<IMG SRC='images/NodePlus.gif'" +
+            " BORDER=0 WIDTH=16 HEIGHT=22></A>");
+      }
+      else
+        doc.write("<IMG SRC='images/Node.gif'" +
+          " WIDTH=16 HEIGHT=22>");
+      leftSide += "<IMG SRC='images/VertLine.gif'" +
+        " WIDTH=16 HEIGHT=22>";
+    }
+
+    doc.write("<TD>&nbsp;");
+
+
+    if (id == selectedElementId)
+      doc.write("<A CLASS=selected");
+    else
+      doc.write("<A CLASS=normal");
+
+
+  doc.write(" HREF='javascript:top.clickElement("
+    + id + ", \"" + url + "\")'>" + title + "</A>");
+
+  doc.write("</TABLE>")
+
+  if (hasSubNode && expanded) {
+    level++;
+    for (i=4; i<foldersNode.length;i++)
+      if (i==foldersNode.length-1)
+      redrawNode(
+          foldersNode[i], doc, level, 1, leftSide);
+      else
+        redrawNode(
+          foldersNode[i], doc, level, 0, leftSide);
+  }
+}
+
+function clickElement(id, url) {
+  selectedElementId = id;
+  redrawTree();
+  parent.frames[1].location = url;
+}
+
+function toggleNode(foldersNode, folderId) {
+  if (foldersNode[0]==folderId)
+    foldersNode[3] = 1 - foldersNode[3];
+  else if (foldersNode[3])
+    for (var i=4; i< foldersNode.length; i++)
+      toggleNode(foldersNode[i], folderId);
+}
+
+
+function clickNode(folderId) {
+  toggleNode(root, folderId);
+  redrawTree();
+}
+
+function initialize() {
+  root = e1;
+  redrawTree();
+}
+<%
+  TocBeanId.getToc("toc.xml");
+  out.println(TocBeanId.getString());
+%>
+
+// end hiding script  -->
+</SCRIPT>
+</HEAD>
+
+<FRAMESET onLoad="initialize()" cols="225,*">
+  <FRAME SRC="toc.html" NAME="treeFrame">
+  <FRAME SRC="content.html" NAME="objectFrame">
+  <NOFRAMES>
+  <BODY>
+    Unfortunately, your browser cannot render frames.
+    Please upgrade your browser.
+  </BODY>
+  </NOFRAMES>
+</FRAMESET>
+</HTML>

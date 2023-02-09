@@ -1,0 +1,8 @@
+<HTML>
+<HEAD>
+<TITLE>Banner</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC=images/banner.jpg>
+</BODY>
+</HTML>

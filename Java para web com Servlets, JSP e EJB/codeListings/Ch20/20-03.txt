@@ -1,0 +1,167 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.StringTokenizer" %>
+<jsp:useBean id="DBBeanId" scope="page"
+  class="docman.DBBean" />
+<%
+  // check HTTP request for userName and password
+  // for request from the Login page
+  String userName = request.getParameter("userName");
+  String password = request.getParameter("password");
+
+  if (userName==null || password==null) {
+    // either userName or password is not found,
+    // the request is not from the Login page,
+    // check cookies
+    userName =
+      DBBeanId.getCookie(request, "userName");
+    password =
+      DBBeanId.getCookie(request, "password");
+  }
+
+  if (userName==null || password==null) {
+    // userName and password still not found
+    // this must be an illegal attempt to bypass
+    // the Login page
+    response.sendRedirect("Login.html");
+  }
+
+  // now userName and password are found,
+  // verify if it is an authorized user
+  if (!DBBeanId.verifyUser(userName, password))
+    response.sendRedirect("Login.html");
+  else {
+    //authorized user, create cookies here
+    Cookie cookieUserName =
+      new Cookie("userName", userName);
+    Cookie cookiePassword =
+      new Cookie("password", password);
+    response.addCookie(cookieUserName);
+    response.addCookie(cookiePassword);
+  }
+%>
+<HTML>
+<HEAD>
+<TITLE>DisplayObjects</TITLE>
+</HEAD>
+<BODY>
+<%
+  // string containing javascript script
+  // built on the fly.
+  String js="";
+  // -------------------------------------
+
+  String parentId = null;
+  // the current folder id
+  String id = request.getParameter("id");
+  boolean atRoot = false;
+
+  if (id==null)
+    id = "1";  // 1 is the root
+  if (id.equals("1"))
+    atRoot = true;
+
+  if (!atRoot) {
+    // display the link to go up one level.
+    // this link calls this same page,
+    // passing the parent id
+    parentId = DBBeanId.getParentId(id, userName,
+      password);
+    out.println("<A HREF=\"DisplayObjects.jsp?id="
+      + parentId + "\">"
+      + "<IMG SRC=\"images/Up.gif\" "
+      + "BORDER=\"0\"></A><BR>");
+  }
+
+  String currentFolderName =
+    DBBeanId.getFolderName(id, userName, password);
+  if (currentFolderName==null)
+    out.println("<B>You don't have permission to"
+      + " view this folder.</B>");
+  else {
+    out.println("<B>Current Folder: "
+      + currentFolderName + "</B>");
+%>
+
+<TABLE WIDTH=600>
+<TR BGCOLOR=#D6D6D6>
+  <TD WIDTH=100>Name</TD>
+  <TD >Type</TD>
+</TR>
+<%
+    ArrayList records = DBBeanId.getChildObjects(
+      id, userName, password);
+
+    for (int i=0; i<records.size(); i++) {
+      String row = (String) records.get(i);
+      StringTokenizer st =
+        new StringTokenizer(row, ",");
+      String objectId = (String) st.nextElement();
+      String type = (String) st.nextElement();
+      String name = (String) st.nextElement();
+      String imagePath;
+      String objectLink;
+      String objectType;
+
+      if (type.equals("0")) {  //folder
+        imagePath =
+"<IMG SRC=\"images/folder.gif\" BORDER=\"0\">";
+        objectLink =
+          "<A HREF=\"DisplayObjects.jsp?id=" +
+          objectId + "\">";
+        objectType = "Folder";
+
+        // ---- this is for part 2 -----------------
+        //create javascript string for subfolders
+        js+="parent.appendFolder(parent.folderTree,"
+          + id + ",parent.createFolder("
+          + objectId + ",'" + name + "'));\n";
+        // -----------------------------------------
+
+      }
+      else { //file
+        imagePath =
+"<IMG SRC=\"images/file.gif\" BORDER=\"0\">";
+        objectLink =
+          "<A HREF=\"DownloadObject.jsp?id=" +
+          objectId + "\">";
+        objectType = "File";
+      }
+
+      out.println("<TR>\n");
+      out.println("  <TD>" + objectLink + imagePath
+        + "</A>&nbsp;" + objectLink + name
+        + "</A></TD>\n");
+      out.println("  <TD>" + objectType +
+        "</TD>\n");
+      out.println("</TR>\n");
+    }
+%>
+<TR>
+  <TD COLSPAN=2><HR></TD>
+</TR>
+<TR>
+  <TD COLSPAN=2 ALIGN=RIGHT>
+    <FORM METHOD=POST ENCTYPE=MULTIPART/FORM-DATA
+      ACTION=UploadObject.jsp>
+    <INPUT TYPE=HIDDEN NAME=parentId VALUE="<%=id%>">
+    <B>Upload File:</B>
+    <INPUT TYPE=FILE NAME=filename SIZE=25>
+    <INPUT TYPE=SUBMIT VALUE=Upload>
+    </FORM>
+  </TD>
+</TR>
+
+</TABLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+parent.deleteSubfolder(parent.folderTree, <%=id%>);
+<%=js%>
+parent.openFolderId=<%=id%>;
+parent.redrawTree();
+</SCRIPT>
+
+<%
+  }
+%>
+</BODY>
+</HTML>

@@ -1,0 +1,25 @@
+import javax.servlet.*;
+import java.io.IOException;
+
+public class AttributeSetterServlet implements Servlet {
+
+  public void init(ServletConfig config) throws ServletException {
+    // bind an object that is to be shared among other servlets
+    ServletContext servletContext = config.getServletContext();
+    servletContext.setAttribute("password", "dingdong");
+  }
+
+  public void service(ServletRequest request, ServletResponse response)
+    throws ServletException, IOException {
+  }
+
+  public void destroy() {
+  }
+
+  public String getServletInfo() {
+    return null;
+  }
+  public ServletConfig getServletConfig() {
+    return null;
+  }
+}

@@ -1,0 +1,42 @@
+package com.brainysoftware.ejb;
+
+import javax.jms.*;
+import javax.naming.*;
+
+public class MessageSender {
+
+  public static void main(String[] args) {
+    QueueConnection queueConnection = null;
+
+    try {
+      Context context = new InitialContext();
+      QueueConnectionFactory queueConnectionFactory =
+        (QueueConnectionFactory) context.lookup("QueueConnectionFactory");
+      String queueName = "MyQueue";
+      Queue queue = (Queue) context.lookup(queueName);
+      queueConnection =
+      queueConnectionFactory.createQueueConnection();
+      QueueSession queueSession =
+        queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+      QueueSender queueSender = queueSession.createSender(queue);
+      TextMessage message = queueSession.createTextMessage();
+      message.setText("This is a TextMessage");
+      queueSender.send(message);
+      System.out.println("Message sent.");
+    }
+    catch (NamingException e) {
+      System.out.println("Naming Exception");
+    }
+    catch (JMSException e) {
+      System.out.println("JMS Exception");
+    }
+    finally {
+      if (queueConnection != null) {
+        try {
+          queueConnection.close();
+        }
+        catch (JMSException e) {}
+      }
+    }
+  }
+}

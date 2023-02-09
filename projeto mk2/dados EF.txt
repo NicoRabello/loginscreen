@@ -1,0 +1,13 @@
+Execução fiscal:
+número do processo
+Eletronico/não
+Data de ajuizamento
+nosso número
+tribunal(instância)
+chefia
+procuradoria
+procurador
+
+número da CDA, valor, Devedor
+
+Novo/Salvar/Editar cadastro/Limpar/Fechar

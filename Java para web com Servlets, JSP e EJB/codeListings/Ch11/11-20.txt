@@ -1,0 +1,2 @@
+<%@ taglib uri="/myTLD" prefix="easy"%>
+<easy:myTag>See the big picture?</easy:myTag>

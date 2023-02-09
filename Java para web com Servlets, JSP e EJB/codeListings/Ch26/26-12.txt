@@ -1,0 +1,17 @@
+<SCRIPT LANGUAGE="JavaScript">
+
+function createDog(name, color) {
+  var dog = new Array();
+  dog[0] = name;
+  dog[1] = color;
+  return dog;
+}
+function append(parent, child) {
+  parent[parent.length] = child;
+}
+
+var doggy = createDog("boli", "black");
+var puppy = createDog("boni", "white");
+append(doggy, puppy);
+
+</SCRIPT>
