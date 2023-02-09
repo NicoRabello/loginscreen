@@ -1,8 +1,0 @@
-<HTML>
-<HEAD>
-<TITLE>Error Page</TITLE>
-</HEAD>
-<BODY>
-Login failed. Click <A HREF="Login.html">here</A> to try again.
-</BODY>
-</HTML>

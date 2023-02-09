@@ -1,2 +1,0 @@
-<%@ taglib uri="/WEB-INF/taglib.tld" prefix="easy"%>
-<easy:myTag/>

@@ -1,7 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-// define an array variable and create an Array object
-var myArray = new Array();
-// populate the first and second elements
-myArray[0] = 1;
-myArray[1] = "the name";
-</SCRIPT>

@@ -1,9 +1,0 @@
-<HTML>
-<HEAD>
-<TITLE>Moving forward</TITLE>
-</HEAD.
-<BODY>
-Click <A HREF="javascript:history.go(1)">here</A>
-to move forward.
-</BODY>
-</HTML>

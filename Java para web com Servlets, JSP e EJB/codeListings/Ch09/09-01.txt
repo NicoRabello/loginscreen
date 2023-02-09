@@ -1,7 +1,0 @@
-<%@ page session="false" %>
-<%@ page import="java.util.Calendar" %>
-<%@ include file="includes/Header.html" %>
-<%
-  out.println("Current time: " + Calendar.getInstance().getTime());
-%>
-<%@ include file="includes/Footer.html" %>

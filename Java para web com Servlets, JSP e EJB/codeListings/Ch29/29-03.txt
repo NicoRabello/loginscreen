@@ -1,9 +1,0 @@
-package com.brainysoftware.tassie.ejb;
-
-import javax.ejb.EJBObject;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-
-public interface Search extends EJBObject {
-  public ArrayList search(String keyword) throws RemoteException;
-}

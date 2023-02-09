@@ -1,5 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-function append(parent, child) {
-  parent[parent.length] = child;
-}
-</SCRIPT>

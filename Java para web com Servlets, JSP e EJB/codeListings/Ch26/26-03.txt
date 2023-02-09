@@ -1,8 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-// define an array variable and create an Array object
-var anArray = new Array();
-var anotherArray = new Array();
-anArray[0] = 1;
-// assinging another array as an element of anArray
-anArray[1] = anotherArray;
-</SCRIPT>

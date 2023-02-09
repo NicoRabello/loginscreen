@@ -1,7 +1,0 @@
-<%
-  If Request.Cookies("test") <> "" Then
-    Response.Write "Cookies accepted."
-  Else
-    Response.Write "Cookies not accepted."
-  End If
-%>

@@ -1,7 +1,0 @@
-package com.brainysoftware.ejb;
-
-import javax.ejb.EJBObject;
-import java.rmi.RemoteException;
-
-public interface Adder extends EJBObject {
-  public int add(int a, int b) throws RemoteException;

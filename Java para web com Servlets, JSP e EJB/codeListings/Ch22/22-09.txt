@@ -1,5 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-<function getBrowserGeneration() {
-  return navigator.appVersion.charAt(0);
-}
-</SCRIPT>

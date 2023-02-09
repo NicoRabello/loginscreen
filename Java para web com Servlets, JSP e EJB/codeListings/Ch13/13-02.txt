@@ -1,4 +1,0 @@
-<jsp:useBean id="TheBean" scope="page" class="SimpleBean " />
-<%
-  TheBean.doUpload(request);
-%>

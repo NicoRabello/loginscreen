@@ -1,5 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-function isJavaEnabled() {
-  return ( navigator.javaEnabled() );   
-}
-</SCRIPT>

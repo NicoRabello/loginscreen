@@ -1,6 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-function convertToOZDate(str) {
-  // validate that this isUSDate first?
-  return (str.substring(3,5) + "/" + str.substring(0,2) + "/" + str.substring(6,10));
-}
-</SCRIPT>

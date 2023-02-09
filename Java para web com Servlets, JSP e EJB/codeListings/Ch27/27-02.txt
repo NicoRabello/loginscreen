@@ -1,5 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-function isAppletReady(applet) {
-  return applet.isActive();
-} 
-</SCRIPT>

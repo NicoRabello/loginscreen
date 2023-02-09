@@ -1,6 +1,0 @@
-<HTML>
-<HEAD>
-<META HTTP-EQUIV="Set-Cookie" CONTENT="test=ok;">
-<META HTTP-EQUIV="Refresh" CONTENT="0;URL=checkCookie.jsp"> 
-</HEAD>
-</HTML>

@@ -1,3 +1,0 @@
-function append(parent, child) {
-  parent[parent.length] = child;
-}

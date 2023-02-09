@@ -1,5 +1,0 @@
-<jsp:useBean id="theBean" class="com.brainysoftware.CalculatorBean"/>
-<%
-  theBean.setMemory(987);
-%>
-The value of memory is <%= theBean.getMemory()%>

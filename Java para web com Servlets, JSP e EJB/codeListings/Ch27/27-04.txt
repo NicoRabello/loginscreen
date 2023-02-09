@@ -1,4 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-document.applets[0].height = 90;
-document.applets[0].width = 60;
-</SCRIPT>

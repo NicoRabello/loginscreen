@@ -1,2 +1,0 @@
-<%@ taglib uri="/myTLD" prefix="easy"%>
-<easy:myTag number="2" power="3"/>

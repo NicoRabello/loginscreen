@@ -1,5 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-var myArray = new Array(20);
-myArray[20] = "new element.";
-// myArray.length value is 21
-</SCRIPT>

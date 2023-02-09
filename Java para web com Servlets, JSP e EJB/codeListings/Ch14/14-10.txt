@@ -1,9 +1,0 @@
-<%
-  out.println("Auth Type:" + request.getAuthType());
-  out.println("<BR>User Principal:" + request.getUserPrincipal());
-  out.println("<BR>Remote User:" + request.getRemoteUser());
-  if (request.isUserInRole("tomcat"))
-    out.println("<BR>User in role");
-  else
-    out.println("<BR>User not in role");
-%>
